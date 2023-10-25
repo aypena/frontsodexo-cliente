@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Mis Noticias</h3>
+            <table class="table table-hovert mt -5">
+                <thead>
+                    <tr>
+                        <Th>Titulos</Th>
+                        <Th>Descripciones</Th>
+                        <Th>Resumen</Th>
+                        <Th>Fecha de publicacion</Th>
+                    </tr>
+                </thead>
+                 <tbody>
+                    <tr *ngFor="let noticia of noticias">
+                        <td>{{noticia.title}}</td>
+                        <td>{{noticia.description}}</td>
+                        <td>{{noticia.summary}}</td>
+                        <td>{{noticia.datePublication}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h3>Nueva Noticia</h3>
+            <form class="mt-5" [formGroup]="formulario" (ngSubmit)="save()">
+                <div class="mb-2">
+                    <label for="title">Titulo</label>
+                    <input type="title" type="text" placeholder="Title" class="form-control" formControlName="title">
+                 </div>
+                 <div class="mb-2">
+                    <label for="title">Descripcion</label>
+                    <input type="description" type="text" placeholder="Descripcion" class="form-control" formControlName="description">
+                 </div>
+                 <div class="mb-2">
+                    <label for="title">Resumen</label>
+                    <input type="description" type="summary" placeholder="Resumen" class="form-control" formControlName="summary">
+                 </div>
+
+                 <div class="mb-2">
+                    <label for="title">Fechas de Publicación</label>
+                    <input type="description" type="datePublication" placeholder="Fecha" class="form-control" formControlName="datePublication">
+                 </div>
+                 <div class="text-end">
+                    <button class="btn btn-primary">
+                        Guardar
+                    </button>
+                 </div>
+            </form>     
+        </div>
+
+    </div>
+
+
+</div>
