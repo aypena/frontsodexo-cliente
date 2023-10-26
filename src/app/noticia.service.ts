@@ -17,10 +17,10 @@ export class NoticiaService {
     return this.http.post('http://localhost:8080/api/FeaturedNewsEntitys',noticia);
   }
 
-  update(title:string,noticia:any){
-    return this.http.put('http://localhost:8080/api/FeaturedNewsEntitys/' + title ,noticia);
+  update(href:string,noticia:any){
+    return this.http.put( href,noticia);
   }
-  delete(id:number){
-    return this.http.delete('http://localhost:8080/api/FeaturedNewsEntitys/' + id);
+  delete(href: string){
+    return this.http.delete(href);
   }
 }

@@ -16,6 +16,7 @@ formulario:FormGroup = this.fb.group({
   datePublication:[]
 
 });
+noticiaEnEdicion:any;
 
   constructor(
     private noticiaService:NoticiaService,
@@ -36,13 +37,73 @@ this.getAll();
   }
 
   save(){
+
+
     const values = this.formulario.value;
-    this.noticiaService.create(values).subscribe(() =>{
-      this.noticiaService.getAll()
-      .subscribe((noticias:any) => {
-        console.log('noticia',noticias);
-        this.noticias=noticias._embedded.FeaturedNewsEntitys;
-      })
-    })    
+    if (this.noticiaEnEdicion){
+      this.noticiaService.update(this.noticiaEnEdicion._links.self.href,values)
+      .subscribe({
+          next: ()=>{
+            this.getAll();
+            this.noticiaEnEdicion=null;
+            this.formulario.setValue({
+              title:'',
+              description:'',
+              summary:'',
+              datePublication:''
+
+            })
+          },
+            error: ()=>{
+              
+            }
+          })
+    }else{
+      this.noticiaService.create(values)
+      .subscribe({
+          next: ()=>{
+            this.getAll();
+            this.formulario.setValue({
+              title:'',
+              description:'',
+              summary:'',
+              datePublication:''
+
+            })
+          },
+            error: ()=>{
+              
+            }
+          })
+
+                  
+         
+
+    }
+      
+  }
+
+  edit(noticia:any){
+    this.noticiaEnEdicion= noticia;
+    this.formulario.setValue({
+      title: noticia.title,
+      description: noticia.description,
+      summary: noticia.summary,
+      datePublication:noticia.datePublication
+  })
+  }
+
+  delete(noticia:any){
+    const ok = confirm('¿Estas seguro de eliminar esta noticia?')
+if(ok){
+  this.noticiaService.delete(noticia._links.self.href)
+  .subscribe(() => (
+  this.getAll()
+  ));
+
+}
+
+    
+
   }
 }
